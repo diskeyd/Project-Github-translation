@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Git-KR: GitHub 한글화 확장프로그램",
+  "version": "1.0.0",
+  "description": "GitHub 인터페이스를 실시간으로 한국어로 번역해주는 Chrome 확장프로그램. AI 기반 고품질 번역과 로컬 사전을 제공합니다.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://github.com/*",
+    "*://api.github.com/*"
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "Git-KR: GitHub 한글화 설정"
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://github.com/*"
+      ],
+      "js": ["src/content/content.js"],
+      "css": ["src/content/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/glossary.json",
+        "src/content/content.css"
+      ],
+      "matches": ["*://github.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'; img-src 'self' data: https:;"
+  }
+}

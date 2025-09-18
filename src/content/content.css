@@ -1,0 +1,56 @@
+/* GitHub 한글화 확장프로그램 - 컨텐츠 스크립트용 스타일 */
+
+.github-translator-banner {
+  position: fixed !important;
+  top: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: #4caf50 !important;
+  color: white !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  z-index: 10000 !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 180px !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+  user-select: none !important;
+}
+
+.github-translator-banner.inactive {
+  background: #f44336 !important;
+}
+
+.github-translator-toggle-btn {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: white !important;
+  padding: 4px 12px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  min-width: 40px !important;
+  transition: all 0.2s ease !important;
+  outline: none !important;
+  position: relative !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  user-select: none !important;
+}
+
+.github-translator-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  transform: scale(1.05) !important;
+}
+
+.github-translator-toggle-btn:active {
+  background: rgba(255, 255, 255, 0.45) !important;
+  transform: scale(0.95) !important;
+}

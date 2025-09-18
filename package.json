@@ -1,0 +1,39 @@
+{
+  "name": "git-kr-extension",
+  "version": "1.0.0",
+  "description": "GitHub 한글화 Chrome 확장프로그램 - AI 기반 실시간 번역",
+  "main": "src/content/content.js",
+  "scripts": {
+    "dev": "echo '개발 서버를 시작하려면: cd server && python app.py'",
+    "build": "echo '확장프로그램 빌드 준비 중...'",
+    "start:server": "cd server && python app.py",
+    "test": "echo '테스트 준비 중...'",
+    "lint": "echo '린트 검사 준비 중...'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "github",
+    "korean",
+    "translation",
+    "localization",
+    "i18n",
+    "developer-tools",
+    "productivity"
+  ],
+  "author": {
+    "name": "Git-KR Team"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diskeyd/Project-Github-translation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/diskeyd/Project-Github-translation/issues"
+  },
+  "homepage": "https://github.com/diskeyd/Project-Github-translation#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "private": true
+}

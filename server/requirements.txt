@@ -1,0 +1,14 @@
+# 웹 서버 프레임워크
+Flask==2.3.3
+Flask-CORS==4.0.0
+Werkzeug==2.3.7
+
+# Google Translate API
+googletrans==4.0.0rc1
+
+# 유틸리티 
+requests==2.31.0
+python-dateutil==2.8.2
+
+# googletrans 의존성 (자동으로 설치됨)
+# httpx==0.13.3 (googletrans가 자동으로 관리)

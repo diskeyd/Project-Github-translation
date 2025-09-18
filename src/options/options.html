@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>GitHub 한글화 - 설정</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        font-size: 2.8em;
+        margin: 0;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        font-weight: 700;
+      }
+
+      .header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+        margin: 12px 0 0 0;
+        font-weight: 400;
+      }
+
+      .settings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .settings-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .settings-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .full-width {
+        grid-column: 1 / -1;
+      }
+
+      .card-title {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0 0 20px 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-left: auto;
+      }
+
+      .status-connected {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+      }
+
+      .status-disconnected {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+      }
+
+      .status-testing {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      .form-label {
+        display: block;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .api-key-help {
+        color: #6b7280;
+        font-size: 12px;
+        margin-top: 6px;
+        line-height: 1.4;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 0;
+        margin-bottom: 20px;
+      }
+
+      .checkbox-group input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #667eea;
+      }
+
+      .checkbox-group label {
+        font-size: 14px;
+        color: #374151;
+        cursor: pointer;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+        color: white;
+        box-shadow: 0 4px 16px rgba(8, 145, 178, 0.3);
+      }
+
+      .btn-primary:hover {
+        box-shadow: 0 6px 20px rgba(8, 145, 178, 0.4);
+      }
+
+      .btn-test {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+      }
+
+      .btn-test:hover {
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        color: white;
+        box-shadow: 0 4px 16px rgba(107, 114, 128, 0.3);
+      }
+
+      .btn-secondary:hover {
+        box-shadow: 0 6px 20px rgba(107, 114, 128, 0.4);
+      }
+
+      .btn-danger {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+      }
+
+      .btn-danger:hover {
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+      }
+
+      .btn-small {
+        padding: 8px 16px;
+        font-size: 12px;
+      }
+
+      .server-message {
+        margin-top: 16px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .server-message.success {
+        background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        color: #065f46;
+        border: 1px solid #10b981;
+      }
+
+      .server-message.error {
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        color: #991b1b;
+        border: 1px solid #ef4444;
+      }
+
+      .server-message.info {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        color: #1e40af;
+        border: 1px solid #3b82f6;
+      }
+
+      .add-word-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 16px;
+        align-items: end;
+        margin-bottom: 24px;
+      }
+
+      .word-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .word-table th,
+      .word-table td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .word-table th {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        font-weight: 600;
+        color: #374151;
+        font-size: 14px;
+      }
+
+      .word-table tr:hover {
+        background: #f9fafb;
+      }
+
+      .word-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .stats-section {
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .stats-section h3 {
+        margin: 0 0 20px 0;
+        color: #374151;
+        font-size: 1.3em;
+        font-weight: 700;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        padding: 24px;
+        border-radius: 16px;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-number {
+        font-size: 2.2em;
+        font-weight: 800;
+        background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .stat-label {
+        color: #6b7280;
+        font-size: 0.9em;
+        font-weight: 500;
+        margin-top: 8px;
+      }
+
+      .quick-actions {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 24px;
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      .quick-actions h3 {
+        color: white;
+        margin-bottom: 16px;
+        font-size: 1.4em;
+      }
+
+      .quick-actions .button-group {
+        justify-content: center;
+      }
+
+      /* 반응형 디자인 */
+      @media (max-width: 768px) {
+        .settings-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .add-word-form {
+          grid-template-columns: 1fr;
+        }
+
+        .button-group {
+          flex-direction: column;
+        }
+
+        .header h1 {
+          font-size: 2.2em;
+        }
+      }
+
+      /* 애니메이션 */
+      .settings-card {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 헤더 -->
+      <div class="header">
+        <h1>⚙️ GitHub 한글화 설정</h1>
+        <p>AI 기반 스마트 번역으로 더욱 편리한 GitHub 경험</p>
+      </div>
+
+      <div class="settings-grid">
+        <!-- AI 서버 설정 -->
+        <div class="settings-card">
+          <h2 class="card-title">
+            🤖 AI 서버 설정
+            <span id="serverStatus" class="status-badge status-disconnected">미연결</span>
+          </h2>
+
+          <div class="form-group">
+            <label class="form-label" for="serverUrl">AI 서버 주소</label>
+            <input
+              type="text"
+              id="serverUrl"
+              class="form-input"
+              placeholder="http://localhost:5001"
+              value="http://localhost:5001"
+            />
+            <small class="api-key-help">
+              로컬 AI 번역 서버의 주소를 입력하세요.
+            </small>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="useOfflineMode" />
+            <label for="useOfflineMode">
+              오프라인 모드 (서버 연결 실패시 자동 로컬 번역)
+            </label>
+          </div>
+
+          <div class="button-group">
+            <button id="saveServerUrl" class="btn btn-primary">💾 저장</button>
+            <button id="testServerConnection" class="btn btn-test">
+              🔌 연결 테스트
+            </button>
+          </div>
+
+          <div id="serverMessage" class="server-message" style="display: none;"></div>
+
+          <!-- 서버 통계 -->
+          <div id="serverStats" class="stats-section" style="display: none;">
+            <h3>📊 서버 통계</h3>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number" id="serverRequests">0</div>
+                <div class="stat-label">번역 요청</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="serverSuccess">0%</div>
+                <div class="stat-label">성공률</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="serverUptime">0초</div>
+                <div class="stat-label">업타임</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 번역 모드 설정 -->
+        <div class="settings-card">
+          <h2 class="card-title">🎛️ 번역 모드</h2>
+          
+          <div class="form-group">
+            <label class="form-label">현재 번역 모드</label>
+            <div id="currentModeDisplay" class="server-message info">
+              AI 모드 (AI + 로컬 사전)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">모드 설명</label>
+            <small class="api-key-help">
+              • <strong>OFF:</strong> 번역 완전 중지<br>
+              • <strong>LOCAL:</strong> 로컬 사전만 사용<br>
+              • <strong>AI:</strong> AI 서버 + 로컬 사전 사용
+            </small>
+          </div>
+
+          <div class="button-group">
+            <button id="clearCache" class="btn btn-secondary">🗑️ 캐시 초기화</button>
+            <button id="resetSettings" class="btn btn-danger btn-small">⚠️ 설정 초기화</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 사용자 정의 단어 관리 (전체 너비) -->
+      <div class="settings-card full-width">
+        <h2 class="card-title">📝 사용자 정의 단어</h2>
+        <p style="margin-bottom: 20px; color: #6b7280;">
+          자주 사용하는 개발 용어나 회사 전용 용어를 추가하여 맞춤 번역을 받으세요.
+        </p>
+
+        <div class="add-word-form">
+          <div>
+            <label class="form-label">영어 단어</label>
+            <input
+              type="text"
+              id="englishWord"
+              class="form-input"
+              placeholder="예: repository"
+            />
+          </div>
+          <div>
+            <label class="form-label">한글 번역</label>
+            <input
+              type="text"
+              id="koreanWord"
+              class="form-input"
+              placeholder="예: 저장소"
+            />
+          </div>
+          <button id="addWord" class="btn btn-primary">➕ 추가</button>
+        </div>
+
+        <table class="word-table">
+          <thead>
+            <tr>
+              <th>영어</th>
+              <th>한글</th>
+              <th>작업</th>
+            </tr>
+          </thead>
+          <tbody id="wordsTableBody">
+            <tr>
+              <td colspan="3" style="text-align: center; color: #6b7280; padding: 40px;">
+                아직 추가된 단어가 없습니다. 위의 폼을 사용해서 단어를 추가해보세요.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 빠른 작업 -->
+      <div class="quick-actions">
+        <h3>⚡ 빠른 작업</h3>
+        <div class="button-group">
+          <button id="exportSettings" class="btn btn-secondary">📤 설정 내보내기</button>
+          <button id="importSettings" class="btn btn-secondary">📥 설정 가져오기</button>
+          <button id="openGitHub" class="btn btn-primary">🐙 GitHub 바로가기</button>
+        </div>
+      </div>
+    </div>
+
+    <input type="file" id="importFileInput" style="display: none;" accept=".json" />
+    <script src="options.js"></script>
+  </body>
+</html>
