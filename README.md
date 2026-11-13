@@ -14,7 +14,7 @@ GitHub 화면의 영어 UI 문구를 한국어로 바꿔 보여 주는 Chrome �
 | AI | 로컬 번역 서버(`server/app.py`)에 문장을 보내 번역합니다. 서버가 꺼져 있거나 번역이 실패하면 LOCAL 방식으로 대신합니다 |
 
 - 사용자 정의 단어: 옵션 페이지에서 영어–한국어 쌍을 추가·삭제합니다. `chrome.storage.local`에 저장하고, 번역할 때 가장 먼저 적용합니다.
-- 번역 서버: Flask 서버가 `googletrans`로 번역한 뒤 GitHub 용어 사전으로 결과를 바로잡습니다. 번역 결과는 메모리에 캐시합니다(최대 1,000개). 엔드포인트는 `/translate`, `/batch-translate`, `/health`, `/model-status`입니다.
+- 번역 서버: Flask 서버가 `googletrans`로 번역한 뒤 서버에 내장한 GitHub 용어 사전(`server/app.py`)으로 결과를 바로잡습니다. 번역 결과는 메모리에 캐시합니다(최대 1,000개). 엔드포인트는 `/translate`, `/batch-translate`, `/health`, `/model-status`입니다.
 
 ## 폴더 구성
 
@@ -26,7 +26,7 @@ GitHub 화면의 영어 UI 문구를 한국어로 바꿔 보여 주는 Chrome �
 │   ├── popup/               # 모드 전환 팝업
 │   └── options/             # 서버 주소, 사용자 정의 단어 설정
 ├── assets/
-│   ├── glossary.json        # GitHub 용어 사전 (영어 → 한국어, 142개)
+│   ├── glossary.json        # GitHub 용어 사전 데이터 (영어 → 한국어, 142개)
 │   └── icons/
 ├── server/                  # 번역 서버 (Flask + googletrans)
 └── docs/                    # 설치·사용 안내 (SETUP.md, USAGE.md)

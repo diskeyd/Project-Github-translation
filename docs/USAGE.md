@@ -276,20 +276,22 @@ environment → 환경
 ### **📚 번역 사전이 2곳에 나눠진 이유**
 
 ```
-📁 assets/glossary.json (클라이언트용)
-├─ Chrome 확장프로그램에서 직접 사용
-├─ LOCAL 모드에서 활용
-└─ 오프라인에서도 동작
+📁 src/content/content.js (확장 내장 사전)
+├─ LOCAL 모드에서 사용
+└─ 서버가 꺼져도 동작
 
-📁 server/app.py (서버용, 하드코딩)
-├─ Google AI 번역 후처리용
-├─ GitHub 특화 용어 보정
-└─ 더 풍부한 1000+ 단어
+📁 server/app.py (서버 내장 사전)
+├─ googletrans 번역 결과 후처리
+└─ GitHub 특화 용어 보정
+
+📁 assets/glossary.json (용어 사전 데이터)
+├─ GitHub UI 용어 142개 (영어 → 한국어)
+└─ 현재 버전 코드는 이 파일을 직접 불러오지 않음
 ```
 
 **왜 2곳으로 나눈을까?**
 
-- **성능**: 클라이언트는 필수 단어만, 서버는 전체 사전
+- **성능**: 확장은 필수 단어만, 서버는 후처리용 사전
 - **독립성**: 서버가 꺼져도 기본 번역은 동작
 - **유지보수**: 각각 다른 목적으로 최적화
 
@@ -304,9 +306,8 @@ environment → 환경
   → Chrome Storage에서 userGlossary 검색
   → 있으면 즉시 사용! 없으면 다음 단계
 
-2순위: 로컬 사전 확인 (2곳)
-  ├─ assets/glossary.json 확인
-  └─ 없으면 다음 단계
+2순위: 확장 내장 사전 확인 (content.js)
+  → 없으면 다음 단계
 
 3순위: 이전 번역 기록 확인 (캐시)
   → translationCache["repository"] 검색
